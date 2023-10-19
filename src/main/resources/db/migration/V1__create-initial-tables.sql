@@ -40,13 +40,13 @@ BEGIN TRANSACTION
 	CREATE TABLE Enderecos_Notificacoes(
 		id_endereco BIGINT PRIMARY KEY NOT NULL IDENTITY(1,1),
 		id_notificacao BIGINT FOREIGN KEY REFERENCES Notificacoes(id_notificacao),
-		cep VARCHAR,
+		cep VARCHAR NOT NULL,
 		logradouro VARCHAR,
 		complemento VARCHAR,
 		bairro VARCHAR,
 		cidade VARCHAR,
 		uf VARCHAR,
-		numero VARCHAR,
+		numero VARCHAR NOT NULL,
 	)
 IF @@ERROR=0
 COMMIT
