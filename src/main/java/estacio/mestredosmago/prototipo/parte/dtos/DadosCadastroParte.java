@@ -1,5 +1,6 @@
 package estacio.mestredosmago.prototipo.parte.dtos;
 
+import estacio.mestredosmago.prototipo.endereco.dtos.DadosCadastroEndereco;
 import jakarta.validation.constraints.NotBlank;
 
 public record DadosCadastroParte(
@@ -8,6 +9,7 @@ public record DadosCadastroParte(
 
         String nome,
         String documento,
-        String email
+        String email,
+        DadosCadastroEndereco endereco
 ) {
 }
