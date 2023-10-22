@@ -7,6 +7,7 @@ import estacio.mestredosmago.prototipo.parte.Parte;
 import estacio.mestredosmago.prototipo.parte.dtos.DadosCadastroParte;
 import estacio.mestredosmago.prototipo.parte.dtos.DadosListagemParte;
 import estacio.mestredosmago.prototipo.processo.ProcessoRepository;
+import estacio.mestredosmago.prototipo.services.EmailSenderService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,6 +26,9 @@ public class ParteController {
     private ProcessoRepository processoRepository;
     @Autowired
     private EnderecoParteRepository enderecoRepository;
+
+    @Autowired
+    private EmailSenderService servicoEnvioEmail;
 
     @PostMapping
     @Transactional
@@ -47,7 +51,7 @@ public class ParteController {
         //criar paginacao
 
 
-
+        servicoEnvioEmail.enviar("schutzanap@gmail.com", "Teste Java", "Ola! Este é um email enviado pela minha primeira API Resfull em Java :D");
         return ResponseEntity.ok(dados);
     }
 
