@@ -16,3 +16,6 @@ spring.mail.properties.mail.smtp.socketFactory.class=javax.net.ssl.SSLSocketFact
 criar Notificacao
 criar EnderecoNotificacao
 transformar tudo em services
+
+
+Encontrei um erro nos dtos que quando n encontram dados eles retornam Null: Solucao é criar dtos distintos

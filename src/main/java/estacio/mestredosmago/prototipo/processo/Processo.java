@@ -22,7 +22,7 @@ public class Processo {
 
     private String statusProcesso;
 
-    @OneToMany(mappedBy = "processo")
+    @OneToMany(mappedBy = "processo", cascade = CascadeType.ALL)
     private List<Parte> partes;
 
     public Processo(DadosCadastroProcesso dados) {

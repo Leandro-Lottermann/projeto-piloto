@@ -1,12 +1,9 @@
 package estacio.mestredosmago.prototipo.parte.dtos;
 
 import estacio.mestredosmago.prototipo.endereco.dtos.DadosCadastroEndereco;
-import jakarta.validation.constraints.NotBlank;
+import estacio.mestredosmago.prototipo.endereco.dtos.DadosListagemEnderecoParte;
 
-public record DadosCadastroParte(
-        @NotBlank
-        String numProcesso,
-        @NotBlank
+public record DadosAtualizaParte(
         String nome,
         String documento,
         String email,
