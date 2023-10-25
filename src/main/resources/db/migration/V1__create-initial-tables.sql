@@ -40,14 +40,12 @@ BEGIN TRANSACTION
 
 	CREATE TABLE Notificacoes(
 		id_notificacao BIGINT PRIMARY KEY NOT NULL IDENTITY(1,1),
-		num_processo VARCHAR(255) FOREIGN KEY REFERENCES Processos(num_processo),
 		id_parte BIGINT FOREIGN KEY REFERENCES Partes(id_parte),
 		id_endereco BIGINT FOREIGN KEY REFERENCES Enderecos_Notificacoes(id_endereco),
 		texto_notificacao VARCHAR(255),
 		data_envio DATETIME,
 		status_notificacao VARCHAR(255),
-		forma_envio VARCHAR(255),
-		status_envio VARCHAR(255)
+		forma_envio VARCHAR(255)
 	)
 
 

@@ -22,32 +22,30 @@ public class ProcessoController {
     @Autowired
     private ProcessoRepository repository;
     @Autowired
-    private ProcessoService servicesTeste;
+    private ProcessoService processoService;
 
     @GetMapping
     public ResponseEntity<Page<DadosListagemProcesso>> getProcessos(@PageableDefault(size = 10, sort = {"statusProcesso"})Pageable paginacao) {
-        var page = repository.findAll(paginacao).map(DadosListagemProcesso::new);
-//ajustar para retornar uma lista de partes e notificacoes
-
-        return ResponseEntity.ok(page);
+        return processoService.listarProcesos(paginacao);
     }
 
     @PostMapping
     @Transactional
     public ResponseEntity cadastrar(@RequestBody @Valid DadosCadastroProcesso dados, UriComponentsBuilder uriBuilder) {
-        var processo = new Processo(dados);
-        repository.save(processo);
-
-        var uri = uriBuilder.path("/processos/{id}").buildAndExpand(processo.getNumProcesso()).toUri();
-        return ResponseEntity.created(uri).body(new DadosListagemProcesso(processo));
+        return processoService.cadastraProcesso(dados, uriBuilder);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<DadosDetalhamentoProcesso> detalhar(@PathVariable String id) {
     //adicionar lista de partes e notificacoes
-        var processo = repository.getReferenceById(id);
-        var partes = servicesTeste.criaLista(processo.getPartes());
-        return ResponseEntity.ok(new DadosDetalhamentoProcesso(processo, partes));
+       return processoService.detalharProcesso(id);
+    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity excluir(@PathVariable String id) {
+
+        return processoService.excluirProcesso(id);
     }
 
 

@@ -1,5 +1,7 @@
 package estacio.mestredosmago.prototipo.parte;
 
+import estacio.mestredosmago.prototipo.notificacao.Notificacao;
+import estacio.mestredosmago.prototipo.parte.dtos.DadosAtualizaParte;
 import estacio.mestredosmago.prototipo.endereco.EnderecoParte;
 import estacio.mestredosmago.prototipo.parte.dtos.DadosCadastroParte;
 import estacio.mestredosmago.prototipo.processo.Processo;
@@ -8,6 +10,9 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
+import java.util.Optional;
 
 @Entity(name = "Partes")
 @Table(name = "Partes")
@@ -24,13 +29,16 @@ public class Parte {
     @JoinColumn(name = "num_processo", nullable = false)
     private Processo processo;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_endereco")
     private EnderecoParte endereco;
 
     private String nome;
     private String documento;
     private String email;
+
+    @OneToMany(mappedBy = "parte")
+    private List<Notificacao> notificacao;
 
 
 
@@ -39,9 +47,35 @@ public class Parte {
         this.nome = dados.nome();
         this.documento = dados.documento();
         this.email = dados.email();
+        if(endereco != null) {
+            this.endereco = endereco;
+        }
+
+    }
+
+    public void atualizar(DadosAtualizaParte dados) {
+        if(dados.email() != null) {
+            this.email = dados.email();
+        }
+        if(this.documento == null && dados.documento() != null) {
+            this.documento = dados.documento();
+        }
+        if(dados.email() != null) {
+            this.email = dados.email();
+        }
+    }
+
+    public void atualizar(DadosAtualizaParte dados, EnderecoParte endereco) {
+        if(dados.email() != null) {
+            this.email = dados.email();
+        }
+        if(this.documento == null && dados.documento() != null) {
+            this.documento = dados.documento();
+        }
+        if(dados.email() != null) {
+            this.email = dados.email();
+        }
         this.endereco = endereco;
-
-
     }
 
 
