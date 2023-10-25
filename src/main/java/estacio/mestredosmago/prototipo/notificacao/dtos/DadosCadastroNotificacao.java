@@ -6,7 +6,7 @@ public record DadosCadastroNotificacao(
 
         Long idParte,
         String textoNotificacao,
-        String statusNotificacao
+        Boolean concluida
 
 ) {
 }

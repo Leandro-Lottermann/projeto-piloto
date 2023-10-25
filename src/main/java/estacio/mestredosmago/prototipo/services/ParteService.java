@@ -1,5 +1,6 @@
 package estacio.mestredosmago.prototipo.services;
 
+import estacio.mestredosmago.prototipo.endereco.dtos.DadosCadastroEndereco;
 import estacio.mestredosmago.prototipo.parte.dtos.DadosAtualizaParte;
 import estacio.mestredosmago.prototipo.endereco.EnderecoParte;
 import estacio.mestredosmago.prototipo.endereco.EnderecoParteRepository;
@@ -37,15 +38,17 @@ public class ParteService {
 
     public ResponseEntity cadastraParte(DadosCadastroParte dados, String numProcesso, UriComponentsBuilder uriBuilder) {
         var processo = processoRepository.getReferenceById(numProcesso);
-        EnderecoParte endereco;
+        EnderecoParte endereco = null;
 
-        if(dados.endereco().logradouro() == null && dados.endereco().complemento() == null && dados.endereco().bairro() == null && dados.endereco().cidade() == null && dados.endereco().uf() == null) {
-            endereco = new EnderecoParte(viaCepService.buscarDados(dados.endereco().cep()), dados.endereco());
-        } else {
-            endereco = new EnderecoParte(dados.endereco());
+        if(dados.endereco() != null){
+            if(dados.endereco().logradouro() == null && dados.endereco().complemento() == null && dados.endereco().bairro() == null && dados.endereco().cidade() == null && dados.endereco().uf() == null) {
+                endereco = new EnderecoParte(viaCepService.buscarDados(dados.endereco().cep()), dados.endereco());
+                enderecoRepository.save(endereco);
+            } else {
+                endereco = new EnderecoParte(dados.endereco());
+                enderecoRepository.save(endereco);
+            }
         }
-
-        enderecoRepository.save(endereco);
 
         
         var parte = new Parte(dados, processo, endereco);
@@ -60,9 +63,9 @@ public class ParteService {
 
     }
 
-    public ResponseEntity<Page<DadosListagemParte>> listarPartes(Pageable paginacao) {
+    public ResponseEntity<Page<DadosListagemParteNoEndereco>> listarPartes(Pageable paginacao) {
 
-        List<DadosListagemParte> dados = parteRepository.findAll().stream().map(p -> new DadosListagemParte(p)).toList();
+        List<DadosListagemParteNoEndereco> dados = parteRepository.findAll().stream().map(p -> new DadosListagemParteNoEndereco(p)).toList();
 
         return ResponseEntity.ok(new PageImpl<>(dados, paginacao, dados.size()));
     }
@@ -70,20 +73,54 @@ public class ParteService {
 
     public ResponseEntity atualizarParte(Long id, DadosAtualizaParte dados) {
         var parte = parteRepository.getReferenceById(id);
-        if(dados.endereco() != null) {
+        EnderecoParte endereco = null;
+
+        if(dados.endereco() != null && parte.getEndereco() != null) {
             if(dados.endereco().logradouro() == null && dados.endereco().complemento() == null && dados.endereco().bairro() == null && dados.endereco().cidade() == null && dados.endereco().uf() == null) {
                 parte.getEndereco().atualizar(viaCepService.buscarDados(dados.endereco().cep()), dados.endereco());
             } else {
                 parte.getEndereco().atualizar(dados.endereco());
             }
-        }
-        parte.atualizar(dados);
 
-        return ResponseEntity.ok(new DadosListagemParte(parte));
+            parte.atualizar(dados);
+
+        } else if (dados.endereco() != null) {
+            if(dados.endereco().logradouro() == null && dados.endereco().complemento() == null && dados.endereco().bairro() == null && dados.endereco().cidade() == null && dados.endereco().uf() == null) {
+                endereco = new EnderecoParte(viaCepService.buscarDados(dados.endereco().cep()), dados.endereco());
+                enderecoRepository.save(endereco);
+            } else {
+                endereco = new EnderecoParte(dados.endereco());
+                enderecoRepository.save(endereco);
+            }
+
+            parte.atualizar(dados, endereco);
+        } else {
+            parte.atualizar(dados);
+        }
+
+
+
+        if(parte.getEndereco() != null) {
+            return ResponseEntity.ok(new DadosListagemParte(parte));
+        } else {
+            return ResponseEntity.ok(new DadosListagemParteNoEndereco(parte));
+        }
     }
 
     public ResponseEntity excluir(Long id) {
         parteRepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
+
+    public ResponseEntity detalharParte(Long id) {
+        var parte = parteRepository.getReferenceById(id);
+        if(parte.getEndereco() != null) {
+            return ResponseEntity.ok(new DadosListagemParte(parte));
+        } else {
+            return ResponseEntity.ok(new DadosListagemParteNoEndereco(parte));
+        }
+
+    }
+
+
 }

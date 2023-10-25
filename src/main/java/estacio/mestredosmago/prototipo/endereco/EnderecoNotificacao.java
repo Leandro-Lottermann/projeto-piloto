@@ -31,4 +31,13 @@ public class EnderecoNotificacao {
     Notificacao notificacao;
 
 
+    public EnderecoNotificacao(EnderecoParte endereco) {
+        this.cep = endereco.getCep();
+        this.logradouro = endereco.getLogradouro();
+        this.complemento = endereco.getComplemento();
+        this.bairro = endereco.getBairro();
+        this.cidade = endereco.getCidade();
+        this.uf = endereco.getUf();
+        this.numero = endereco.getNumero();
+    }
 }

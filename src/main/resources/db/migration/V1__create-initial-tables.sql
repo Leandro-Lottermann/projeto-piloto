@@ -45,8 +45,7 @@ BEGIN TRANSACTION
 		texto_notificacao VARCHAR(255),
 		data_envio DATETIME,
 		status_notificacao VARCHAR(255),
-		forma_envio VARCHAR(255),
-		status_envio VARCHAR(255)
+		forma_envio VARCHAR(255)
 	)
 
 

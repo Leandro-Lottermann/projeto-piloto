@@ -13,9 +13,10 @@ spring.mail.properties.mail.smtp.writetimeout=5000
 spring.mail.properties.mail.smtp.socketFactory.port=465
 spring.mail.properties.mail.smtp.socketFactory.class=javax.net.ssl.SSLSocketFactory
 
-criar Notificacao
-criar EnderecoNotificacao
-transformar tudo em services
+
 
 
 Encontrei um erro nos dtos que quando n encontram dados eles retornam Null: Solucao é criar dtos distintos
+
+
+no processo alterar o status do processo: Enum de Sem notificacao, notificacoes pendentes, notificacoes entregues.

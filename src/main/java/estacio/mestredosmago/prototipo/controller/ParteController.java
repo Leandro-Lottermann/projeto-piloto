@@ -3,8 +3,12 @@ package estacio.mestredosmago.prototipo.controller;
 import estacio.mestredosmago.prototipo.parte.dtos.DadosAtualizaParte;
 import estacio.mestredosmago.prototipo.parte.dtos.DadosCadastroParte;
 import estacio.mestredosmago.prototipo.parte.dtos.DadosListagemParte;
+import estacio.mestredosmago.prototipo.parte.dtos.DadosListagemParteNoEndereco;
+import estacio.mestredosmago.prototipo.services.EmailSenderService;
 import estacio.mestredosmago.prototipo.services.ParteService;
+import estacio.mestredosmago.prototipo.services.viacep.ViaCepService;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,15 +23,23 @@ public class ParteController {
     @Autowired
     private ParteService parteService;
 
+    @Autowired
+    private EmailSenderService emailSenderService;
 
     @PostMapping("/{id}")
     @Transactional
-    public ResponseEntity cadastrar(@RequestBody DadosCadastroParte dados, UriComponentsBuilder uriBuilder, @PathVariable String id) {
+    public ResponseEntity cadastrar(@RequestBody @Valid DadosCadastroParte dados, UriComponentsBuilder uriBuilder, @PathVariable String id) {
         return parteService.cadastraParte(dados, id, uriBuilder);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity emailCaique(@PathVariable Long id) {
+       return parteService.detalharParte(id);
+    }
+
+
     @GetMapping
-    public ResponseEntity<Page<DadosListagemParte>> getPartes(@PageableDefault(size = 10, sort = {"statusProcesso"}) Pageable paginacao) {
+    public ResponseEntity<Page<DadosListagemParteNoEndereco>> getPartes(@PageableDefault(size = 10, sort = {"statusProcesso"}) Pageable paginacao) {
 
         return parteService.listarPartes(paginacao);
     }
@@ -36,7 +48,7 @@ public class ParteController {
     @Transactional
     public ResponseEntity atualizar(@RequestBody DadosAtualizaParte dados, @PathVariable Long id) {
 
-        return parteService.atualizarParte(id, dados);
+       return parteService.atualizarParte(id, dados);
     }
 
     @DeleteMapping("/{id}")

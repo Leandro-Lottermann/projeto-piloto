@@ -11,6 +11,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.Optional;
 
 @Entity(name = "Partes")
@@ -36,8 +37,8 @@ public class Parte {
     private String documento;
     private String email;
 
-    @OneToOne(mappedBy = "parte")
-    private Notificacao notificacao;
+    @OneToMany(mappedBy = "parte")
+    private List<Notificacao> notificacao;
 
 
 
@@ -59,8 +60,22 @@ public class Parte {
         if(this.documento == null && dados.documento() != null) {
             this.documento = dados.documento();
         }
+        if(dados.email() != null) {
+            this.email = dados.email();
+        }
+    }
 
-
+    public void atualizar(DadosAtualizaParte dados, EnderecoParte endereco) {
+        if(dados.email() != null) {
+            this.email = dados.email();
+        }
+        if(this.documento == null && dados.documento() != null) {
+            this.documento = dados.documento();
+        }
+        if(dados.email() != null) {
+            this.email = dados.email();
+        }
+        this.endereco = endereco;
     }
 
 

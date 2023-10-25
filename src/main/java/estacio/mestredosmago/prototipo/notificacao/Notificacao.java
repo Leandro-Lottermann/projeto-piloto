@@ -23,7 +23,7 @@ public class Notificacao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idNotificacao;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "id_parte")
     private Parte parte;
 
@@ -34,9 +34,9 @@ public class Notificacao {
 
     private String textoNotificacao;
     private Timestamp dataEnvio;
-    private String statusNotificacao;
+    private String statusNotificacao; //incompleto, nao notificado, notificado
     private String formaEnvio;
-    private String statusEnvio;
+
 
     public Notificacao(DadosCadastroNotificacao dados, Parte parte) {
         this.parte = parte;
@@ -45,11 +45,23 @@ public class Notificacao {
             this.textoNotificacao = dados.textoNotificacao();
         }
 
-        if(this.textoNotificacao != null && dados.statusNotificacao() == "pronta") {
-            this.statusNotificacao = "ENVIADA";
+        this.statusNotificacao = "incompleto";
 
-        } else {
-            this.statusNotificacao = "INCOMPLETA";
-        }
+    }
+
+    public void atualizar(DadosCadastroNotificacao dados) {
+        this.textoNotificacao = dados.textoNotificacao();
+    }
+
+    public void enviar(String statusNotificacao, String formaEnvio, EnderecoNotificacao endereco) {
+        this.statusNotificacao = statusNotificacao;
+        this.formaEnvio = formaEnvio;
+        this.endereco = endereco;
+    }
+
+    public void enviar(String statusNotificacao, String formaEnvio) {
+        this.statusNotificacao = statusNotificacao;
+        this.formaEnvio = formaEnvio;
+
     }
 }

@@ -42,6 +42,7 @@ public class ProcessoController {
     }
 
     @DeleteMapping("/{id}")
+    @Transactional
     public ResponseEntity excluir(@PathVariable String id) {
 
         return processoService.excluirProcesso(id);
