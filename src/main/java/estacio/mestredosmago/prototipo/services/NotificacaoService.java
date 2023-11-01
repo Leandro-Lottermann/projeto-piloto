@@ -92,4 +92,13 @@ public class NotificacaoService {
         List<DadosNotificacaoDetalhesNoEndereco> lista = repository.findAll().stream().map(DadosNotificacaoDetalhesNoEndereco::new).toList();
         return ResponseEntity.ok(new PageImpl<>(lista, paginacao, lista.size()));
     }
+
+    public ResponseEntity detalhar(Long id) {
+        var notificacao = repository.getReferenceById(id);
+        if(notificacao.getEndereco() != null) {
+            return ResponseEntity.ok(new DadosNotificacaoDetalhes(notificacao));
+        } else {
+            return ResponseEntity.ok(new DadosNotificacaoDetalhesNoEndereco(notificacao));
+        }
+    }
 }
