@@ -64,4 +64,8 @@ public class Notificacao {
         this.formaEnvio = formaEnvio;
 
     }
+
+    public void atualizarStatus(String status) {
+        this.statusNotificacao = status;
+    }
 }
