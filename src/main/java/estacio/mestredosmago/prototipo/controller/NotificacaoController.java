@@ -38,6 +38,11 @@ public class NotificacaoController {
         return notificacaoService.listar(paginacao);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity detalharNotificacao(@PathVariable Long id) {
+        return notificacaoService.detalhar(id);
+    }
+
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity deletar(@PathVariable Long id) {
