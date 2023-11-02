@@ -76,10 +76,15 @@ public class NotificacaoService {
             enderecoRepository.save(endereco);
             notificacao.enviar("não notificado", "correios", endereco);
         } else if (notificacao.getParte().getEmail() != null && notificacao.getTextoNotificacao() != null) {
-            notificacao.enviar("notificado", "email");
-            this.emailSenderService.enviar(notificacao.getParte().getEmail(), "Notificação Judicial", notificacao.getTextoNotificacao());
+            try {
+                notificacao.enviar("notificado", "email");
+                this.emailSenderService.enviar(notificacao.getParte().getEmail(), "Notificação Judicial", notificacao.getTextoNotificacao());
+            } catch (RuntimeException e) {
+                throw new RuntimeException(e);
+            }
+
         } else if (notificacao.getTextoNotificacao() != null) {
-            notificacao.enviar("não notificado", "DJe");
+            notificacao.enviar("não notificado", "DJE");
         }
     }
 
