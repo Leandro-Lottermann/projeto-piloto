@@ -1,6 +1,7 @@
 package estacio.mestredosmago.prototipo.notificacao;
 
 import estacio.mestredosmago.prototipo.endereco.EnderecoNotificacao;
+import estacio.mestredosmago.prototipo.notificacao.dtos.DadosAtualizaNotificacao;
 import estacio.mestredosmago.prototipo.notificacao.dtos.DadosCadastroNotificacao;
 import estacio.mestredosmago.prototipo.parte.Parte;
 import estacio.mestredosmago.prototipo.processo.Processo;
@@ -49,7 +50,7 @@ public class Notificacao {
 
     }
 
-    public void atualizar(DadosCadastroNotificacao dados) {
+    public void atualizar(DadosAtualizaNotificacao dados) {
         this.textoNotificacao = dados.textoNotificacao();
     }
 

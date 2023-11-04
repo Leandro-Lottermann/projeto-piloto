@@ -46,7 +46,7 @@ public class ParteController {
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity atualizar(@RequestBody DadosAtualizaParte dados, @PathVariable Long id) {
+    public ResponseEntity atualizar(@RequestBody @Valid DadosAtualizaParte dados, @PathVariable Long id) {
 
        return parteService.atualizarParte(id, dados);
     }

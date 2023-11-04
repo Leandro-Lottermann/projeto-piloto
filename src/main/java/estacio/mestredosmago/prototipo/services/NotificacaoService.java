@@ -3,6 +3,7 @@ package estacio.mestredosmago.prototipo.services;
 import estacio.mestredosmago.prototipo.endereco.EnderecoNotificacao;
 import estacio.mestredosmago.prototipo.endereco.EnderecoNotificacaoRepository;
 import estacio.mestredosmago.prototipo.notificacao.Notificacao;
+import estacio.mestredosmago.prototipo.notificacao.dtos.DadosAtualizaNotificacao;
 import estacio.mestredosmago.prototipo.notificacao.dtos.DadosCadastroNotificacao;
 import estacio.mestredosmago.prototipo.notificacao.NotificacaoRepository;
 import estacio.mestredosmago.prototipo.notificacao.dtos.DadosNotificacaoDetalhes;
@@ -48,10 +49,10 @@ public class NotificacaoService {
         return ResponseEntity.created(uri).body(new DadosNotificacaoDetalhesNoEndereco(notificacao));
     }
 
-    public ResponseEntity atualizaNotificacao(DadosCadastroNotificacao dados, Long id) {
+    public ResponseEntity atualizaNotificacao(DadosAtualizaNotificacao dados, Long id) {
         var notificacao = repository.getReferenceById(id);
-
-        if(notificacao.getStatusNotificacao() == "incompleto"){
+        System.out.println(notificacao.getStatusNotificacao());
+        if(notificacao.getStatusNotificacao().intern() == "incompleto"){
             notificacao.atualizar(dados);
             if(dados.concluida()) {
                 this.enviarNotificacao(notificacao);
@@ -100,6 +101,7 @@ public class NotificacaoService {
 
     public ResponseEntity detalhar(Long id) {
         var notificacao = repository.getReferenceById(id);
+
         if(notificacao.getEndereco() != null) {
             return ResponseEntity.ok(new DadosNotificacaoDetalhes(notificacao));
         } else {
