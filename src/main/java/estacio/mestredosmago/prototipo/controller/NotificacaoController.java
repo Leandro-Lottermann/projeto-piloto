@@ -1,5 +1,6 @@
 package estacio.mestredosmago.prototipo.controller;
 
+import estacio.mestredosmago.prototipo.notificacao.dtos.DadosAtualizaNotificacao;
 import estacio.mestredosmago.prototipo.notificacao.dtos.DadosCadastroNotificacao;
 import estacio.mestredosmago.prototipo.notificacao.dtos.DadosNotificacaoDetalhes;
 import estacio.mestredosmago.prototipo.notificacao.dtos.DadosNotificacaoDetalhesNoEndereco;
@@ -22,14 +23,14 @@ public class NotificacaoController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity cadastrar(@RequestBody  DadosCadastroNotificacao dados, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity cadastrar(@RequestBody  @Valid DadosCadastroNotificacao dados, UriComponentsBuilder uriBuilder) {
 
          return notificacaoService.cadastrarNotificacao(dados, uriBuilder);
     }
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity atualizar(@RequestBody DadosCadastroNotificacao dados, @PathVariable Long id) {
+    public ResponseEntity atualizar(@RequestBody @Valid DadosAtualizaNotificacao dados, @PathVariable Long id) {
         return notificacaoService.atualizaNotificacao(dados, id);
     }
 
