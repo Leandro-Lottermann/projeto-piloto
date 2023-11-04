@@ -83,7 +83,7 @@ DELETE “/partes/[id]” (deleta a parte especificada no id)
 {
 	"idParte": "1",
 	"textoNotificacao": "primeiro texto",
-	"concluida": false	
+	"concluida": false	//necessário informar se está concluida ou não
 }
 ```
 
@@ -100,7 +100,7 @@ PUT “/notificacoes/[idNotificacao]” (atualiza a notificação específica)
 ```json
 {
 	"textoNotificacao": "primeiro texto",
-	"concluida": true	
+	"concluida": true	//necessário informar se está concluida ou não
 }
 ```
 
