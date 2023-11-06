@@ -11,7 +11,10 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Table(name = "Notificacoes")
 @Entity(name = "Notificacao")
@@ -34,7 +37,7 @@ public class Notificacao {
     private EnderecoNotificacao endereco;
 
     private String textoNotificacao;
-    private Timestamp dataEnvio;
+    private LocalDateTime dataEnvio;
     private String statusNotificacao; //incompleto, nao notificado, notificado
     private String formaEnvio;
 
@@ -58,11 +61,13 @@ public class Notificacao {
         this.statusNotificacao = statusNotificacao;
         this.formaEnvio = formaEnvio;
         this.endereco = endereco;
+        this.dataEnvio = LocalDateTime.now();
     }
 
     public void enviar(String statusNotificacao, String formaEnvio) {
         this.statusNotificacao = statusNotificacao;
         this.formaEnvio = formaEnvio;
+        this.dataEnvio = LocalDateTime.now();
 
     }
 
