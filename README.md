@@ -1,6 +1,20 @@
-# Projeto Piloto
-projeto de experimentação para o  mestre dos magos do mundo 3
 # Projeto Piloto (Mestre dos Magos 3)
+
+![estacio-logo.png](readme-images/estacio-logo.png)
+
+**Participantes:**
+
+Luan Augusto Vieira Bandeira - 202209181337
+
+Felipe Andrade de Oliveira Barroso - 202208291597;
+
+Gabriel Henrique dos Santos - 202208292411;
+
+Analécia Mariana Oliveira dos Santos - 202208453872;
+
+Caique Thomaz Stopiglia - 2022.08.29247-1;
+
+Leandro Luiz Lottermann - 202208565042;
 
 Manual da Aplicação e ordem de execução:
 
@@ -83,7 +97,7 @@ DELETE “/partes/[id]” (deleta a parte especificada no id)
 {
 	"idParte": "1",
 	"textoNotificacao": "primeiro texto",
-	"concluida": false	//necessário informar se está concluida ou não
+	"concluida": false	
 }
 ```
 
@@ -100,7 +114,7 @@ PUT “/notificacoes/[idNotificacao]” (atualiza a notificação específica)
 ```json
 {
 	"textoNotificacao": "primeiro texto",
-	"concluida": true	//necessário informar se está concluida ou não
+	"concluida": true	
 }
 ```
 
@@ -139,3 +153,13 @@ PUT “/ecarta/[idNotificacao]” (usado para atualizar em qual parte da entrega
 PUT “/dje/[idNotificacao]” (usada pelo dje para atualizar o status da notificação quando for publicada)
 
 </aside>
+
+# UML do Projeto:
+
+Link: [https://drive.google.com/file/d/1gukfF9RZfFGx8OfqHHjiMMAzrVSMsK_H/view?usp=sharing](https://drive.google.com/file/d/1gukfF9RZfFGx8OfqHHjiMMAzrVSMsK_H/view?usp=sharing)
+
+![DadosNotificacaoDetalhesNoEndereco.png](readme-images/DadosNotificacaoDetalhesNoEndereco.png)
+
+# Banco de dados (SQL-Server):
+
+![bancomm3.png](readme-images/bancomm3.png)
